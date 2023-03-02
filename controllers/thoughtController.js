@@ -112,7 +112,25 @@ async addReaction(req, res) {
     console.error(err);
     res.status(500).json({ error: 'Failed to add reaction.' });
   }
-}
+},
+
+// remove a reaction from a thought
+async removeReaction(req, res) {
+  const { id } = req.params;
+  const { reactionId } = req.body;
+
+  try {
+    const updatedThought = await Thought.findByIdAndUpdate(
+      id,
+      { $pull: { reactions: { _id: reactionId } } },
+      { new: true }
+    );
+    res.status(200).json(updatedThought);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to remove reaction.' });
+  }
+},
 }
 
 module.exports = thoughtController;

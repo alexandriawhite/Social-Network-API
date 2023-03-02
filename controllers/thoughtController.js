@@ -96,6 +96,23 @@ async deleteThought(req, res) {
   }
 },
 
+// add a reaction to a thought
+async addReaction(req, res) {
+  const { id } = req.params;
+  const { reactionBody, username } = req.body;
+
+  try {
+    const updatedThought = await Thought.findByIdAndUpdate(
+      id,
+      { $push: { reactions: { reactionBody, username } } },
+      { new: true }
+    );
+    res.status(200).json(updatedThought);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to add reaction.' });
+  }
+}
 }
 
 module.exports = thoughtController;

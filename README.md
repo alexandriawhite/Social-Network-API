@@ -1,14 +1,15 @@
 # Social Network API
 ## Description 
-
+This is an API for a social network web application where users can share their thoughts, react to friends’ thoughts, and create a friend list.
 ## Table of Contents
 - [Installation](#installation)
-- [Contributions](#contributions)
 - [Preview](#preview)
 - [License](#license)
 
 ## Installation
-
+To run this application:
+- Install the required packages via `npm install` in the console
+- Run `npm start` to start the application
 
 ## Preview
 

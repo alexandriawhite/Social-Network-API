@@ -8,13 +8,9 @@ const {
   addReaction,
 } = require('../../controllers/thoughtController');
 
-
-router.get('/', getAllThoughts);
-router.get('/:id', getThoughtById);
-router.post('/:username', createThought);
-router.put('/:id', updateThought);
-router.delete('/:id', deleteThought);
-router.post('/:id/reactions', addReaction);
+router.route('/').get(getAllThoughts).post(createThought);
+router.route('/:id').get(getThoughtById).put(updateThought).delete(deleteThought);
+router.route('/:id/reactions').post(addReaction);
 
 
 module.exports = router;

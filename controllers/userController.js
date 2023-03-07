@@ -80,7 +80,7 @@ const userController = {
     try {
       const user = await User.findOneAndUpdate(
         { _id: req.params.userId },
-        { $addToSet: { friends: req.body } },
+        { $addToSet: { friends: req.body.friendId } },
         { runValidators: true, new: true }
       );
       if (!user) {
@@ -93,11 +93,12 @@ const userController = {
   },
 
   removeFriend: async (req, res) => {
+    console.log('You are removing a friend');
     try {
-      const user = await User.findOneAndUpdate(
-        { _id: req.params.userId },
-        { $pull: { friends: { friendId: req.params.friendId } } },
-        { runValidators: true, new: true }
+      const user = await User.findByIdAndUpdate(
+        req.params.userId,
+        { $pull: { friends: req.params.friendId } },
+        { new: true }
       );
       if (!user) {
         return res.status(404).json({ message: 'No user with that ID' });

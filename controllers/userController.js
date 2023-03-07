@@ -37,22 +37,24 @@ const userController = {
 
   deleteUser: async (req, res) => {
     try {
-      const deletedUser = await User.findByIdAndDelete(req.params.id);
-
-    if (!deletedUser) {
-      return res.status(404).json({ message: 'No user found with this id!' });
+      const deletedUser = await User.findOneAndDelete({ _id: req.params.userId });
+  
+      if (!deletedUser) {
+        return res.status(404).json({ message: 'No user found with this id!' });
+      }
+  
+      await Thought.deleteMany({ username: deletedUser.username });
+  
+      await User.updateMany(
+        { _id: { $in: deletedUser.friends } },
+        { $pull: { friends: deletedUser._id } }
+      );
+  
+      res.json({ message: 'User deleted successfully!', deletedUser });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ message: 'Failed to delete user!' });
     }
-
-    await User.updateMany(
-      { _id: { $in: deletedUser.friends } },
-      { $pull: { friends: deletedUser._id } }
-    );
-
-    res.json({ message: 'User deleted successfully!', deletedUser });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: 'Failed to delete user!' });
-  }
 },
 
   updateUser: async (req, res) => {

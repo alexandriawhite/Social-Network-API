@@ -100,12 +100,12 @@ async deleteThought(req, res) {
 
 // add a reaction to a thought
 async addReaction(req, res) {
-  const { id } = req.params;
+  const { thoughtId } = req.params; // updated parameter name
   const { reactionBody, username } = req.body;
 
   try {
     const updatedThought = await Thought.findByIdAndUpdate(
-      id,
+      thoughtId, // updated parameter name
       { $push: { reactions: { reactionBody, username } } },
       { new: true }
     );
@@ -118,7 +118,7 @@ async addReaction(req, res) {
 
 // remove a reaction from a thought
 async removeReaction(req, res) {
-  const { id } = req.params;
+  const { thoughtId } = req.params;
   const { reactionId } = req.body;
 
   try {

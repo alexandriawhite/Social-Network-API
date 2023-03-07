@@ -94,7 +94,6 @@ const userController = {
 
   removeFriend: async (req, res) => {
     console.log('You are removing a friend');
-    console.log(req.body);
     try {
       const user = await User.findByIdAndUpdate(
         req.params.userId,

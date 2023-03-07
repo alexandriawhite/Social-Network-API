@@ -123,7 +123,7 @@ async removeReaction(req, res) {
 
   try {
     const updatedThought = await Thought.findByIdAndUpdate(
-      id,
+      thoughtId,
       { $pull: { reactions: { _id: reactionId } } },
       { new: true }
     );

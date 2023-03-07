@@ -17,3 +17,4 @@ const dateFormat = (timestamp, separator = ' ', format = 'yyyy-mm-dd hh:mm:ss') 
 
   return formattedDate.replace(' ', separator);
 };
+module.exports = dateFormat;
